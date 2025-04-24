@@ -1,0 +1,153 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+  color: #fff;
+  overflow: hidden; /* Esconde a barra de rolagem */
+}
+
+.container-telas {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  transition: transform 0.5s ease-in-out; /* Transição suave para o deslizar */
+}
+
+.tela {
+  flex: 0 0 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Estilos Tela 1 (Ajustada) */
+.tela-inicial {
+  background-color: #000; /* Mantém o fundo preto */
+}
+
+.tela-inicial .data-topo {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.2em;
+  color: #f0e68c; /* Cor dourada/amarelada como na imagem */
+  font-weight: bold;
+}
+
+.tela-inicial .foto-container {
+  width: 60%; /* Ajuste o tamanho conforme necessário */
+  margin-bottom: 30px;
+}
+
+.tela-inicial #foto-esposa {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 15px; /* Arredonda as bordas da foto */
+  filter: grayscale(80%) sepia(50%) contrast(110%); /* Efeito câmera antiga */
+}
+
+.tela-inicial .frase-inicial {
+  font-size: 2.5em; /* Aumenta o tamanho da frase */
+  color: #f0e68c; /* Cor dourada/amarelada como na imagem */
+  font-weight: bold;
+  line-height: 1.2; /* Melhora o espaçamento entre as linhas se a frase for longa */
+  margin-top: 20px; /* Adiciona um pouco de espaço entre a foto e a frase */
+}
+
+/* Estilos Tela 2 */
+.tela-easter-egg .coracao {
+  font-size: 3em;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.tela-easter-egg #pergunta-easter-egg {
+  margin-top: 30px;
+}
+
+.tela-easter-egg .resposta {
+  background-color: transparent;
+  color: #fff;
+  border: 1px solid #fff;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.tela-easter-egg #mensagem-acerto {
+  font-size: 1.2em;
+  margin-top: 20px;
+}
+
+/* Estilos Tela 3 */
+.tela-musica .player {
+  background-color: #1db954; /* Cor verde do Spotify (aproximada) */
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.tela-musica .album-cover {
+  font-size: 4em;
+  margin-bottom: 10px;
+}
+
+.tela-musica .song-info h3 {
+  margin: 0;
+}
+
+.tela-musica .song-info p {
+  margin: 5px 0;
+  font-size: 0.9em;
+}
+
+.tela-musica .controls button {
+  background: none;
+  color: #fff;
+  border: none;
+  font-size: 1.5em;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.tela-musica .mensagem-musica {
+  font-size: 1.2em;
+}
+
+.tela-musica .coracao-mensagem {
+  font-size: 1.5em;
+  margin-right: 5px;
+}
+
+/* Estilos Tela 4 */
+.tela-contagem #contagem-regressiva {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.tela-contagem .coracao-grande {
+  font-size: 5em;
+  margin-bottom: 20px;
+}
+
+.tela-contagem .mensagem-amor {
+  font-size: 1.1em;
+}
+
+/* Estilos Tela 5 */
+.tela-mensagem-final .titulo-mensagem-final {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.tela-mensagem-final .mensagem-final {
+  font-size: 1.2em;
+  white-space: pre-line; /* Mantém as quebras de linha */
+}
