@@ -291,6 +291,8 @@
       // Lógica para verificar a data e exibir a tela do dia 22 de maio
       const finalScreen = document.getElementById("finalScreen");
       const countdownElement = document.getElementById("countdown");
+      finalScreen.classList.remove("hidden-until-may");
+      countdownElement.innerHTML = "🎉 Hoje é o grande dia! 🎉";
       //const today = new Date();
       //const may22 = new Date(today.getFullYear(), 4, 22); // Maio é o mês 4 (indexado de 0)
 
