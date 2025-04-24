@@ -66,6 +66,21 @@
           blink 0.75s step-end infinite;
       }
 
+      @keyframes slideUp {
+        from {
+          transform: translateY(30px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .slide-up {
+        animation: slideUp 1s ease-out forwards;
+      }
+
       @keyframes typing {
         from {
           width: 0;
@@ -160,14 +175,19 @@
         <img
           src="img/images.png"
           alt="Foto"
-          style="border-radius: 10px; margin-bottom: 20px"
+          style="
+            border-radius: 10px;
+            margin-bottom: 20px;
+            width: 253px;
+            height: 199px;
+          "
         />
         <h1>Você é o melhor presente.</h1>
       </section>
 
       <!-- Tela 2 -->
       <section class="screen">
-        <h2 class="date">02 MAIO</h2>
+        <h2 class="date">EU E ANNY TE AMAMOS</h2>
         <h2>Toque aqui</h2>
         <div class="heart" style="margin-top: 1rem" id="heart">❤️</div>
       </section>
@@ -177,7 +197,7 @@
         <h2 class="date">UMA MULHER ESPETACULAR</h2>
         <iframe
           style="border-radius: 12px"
-          src="https://open.spotify.com/embed/track/2TE9rkhJYDctxgzak0AnSb?utm_source=generator&theme=0"
+          src="https://open.spotify.com/intl-pt/track/2TE9rkhJYDctxgzak0AnSb?si=788d35d8d3654970"
           width="100%"
           height="152"
           frameborder="0"
@@ -185,7 +205,9 @@
           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
           loading="lazy"
         ></iframe>
-        <h2 style="margin-top: 1rem">Sou sua constante... <em>hahaha</em></h2>
+        <h2 style="margin-top: 1rem">
+          Chama no jorge e mateus <em>hahaha</em>
+        </h2>
         <div class="heart">💛</div>
       </section>
 
@@ -230,7 +252,9 @@
     <div class="popup" id="popup">
       <div class="popup-content">
         <h2>Mensagem Especial</h2>
-        <p>Você é muito especial! Estou tão feliz por estarmos juntos. ❤️</p>
+        <p>
+          Você é muito especial para mim! Estou feliz por estarmos juntos. ❤️
+        </p>
         <button id="closePopup">Fechar</button>
       </div>
     </div>
