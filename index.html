@@ -144,6 +144,11 @@
       .popup button:hover {
         background: #b98a53;
       }
+
+      /* Estilos da tela que fica oculta até o dia 22 de maio */
+      .hidden-until-may {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -187,14 +192,14 @@
       <!-- Tela 4 -->
       <section class="screen">
         <h2 class="date">02 MAIO</h2>
-        <h1>Faltam X dias...</h1>
+        <h1 id="countdown">Faltam X dias...</h1>
         <p class="typewriter">
           Você é inérivel, somos incríveis juntos. Eu te amo.
         </p>
       </section>
 
-      <!-- Tela 5 -->
-      <section class="screen">
+      <!-- Tela 5 (Oculta até o dia 22 de maio) -->
+      <section class="screen hidden-until-may" id="finalScreen">
         <h2 class="date">22 de MAIO</h2>
         <h2>Final</h2>
         <p>Imagem, texto, trilha, tudo. 💖</p>
@@ -238,6 +243,19 @@
         else if (diff < -50 && currentIndex > 0) currentIndex--;
         slider.style.transform = `translateX(-${currentIndex * 100}vw)`;
       });
+
+      // Lógica para verificar a data e exibir a tela do dia 22 de maio
+      const finalScreen = document.getElementById("finalScreen");
+      const countdownElement = document.getElementById("countdown");
+      const today = new Date();
+      const may22 = new Date(today.getFullYear(), 4, 22); // Maio é o mês 4 (indexado de 0)
+
+      if (today >= may22) {
+        finalScreen.classList.remove("hidden-until-may"); // Libera a tela
+      } else {
+        const daysLeft = Math.ceil((may22 - today) / (1000 * 3600 * 24));
+        countdownElement.innerHTML = `Faltam ${daysLeft} dias...`;
+      }
     </script>
   </body>
 </html>
