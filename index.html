@@ -20,14 +20,15 @@
         font-family: "Playfair Display", serif;
         background: #000;
         color: #d4af7f;
-        overflow: hidden;
+        overflow: hidden; /* Garante que apenas uma tela seja visível por vez */
       }
 
       .container {
         display: flex;
-        width: 500vw; /* 5 telas lado a lado */
+        /* Agora temos 6 telas (inicial, popup, spotify, carrossel, countdown, final) */
+        width: 600vw;
         height: 100vh;
-        transition: transform 0.5s ease-in-out;
+        transition: transform 0.8s ease-in-out; /* Transição mais suave */
       }
 
       .screen {
@@ -40,30 +41,24 @@
         justify-content: center;
         padding: 2rem;
         position: relative;
+        text-align: center; /* Centraliza o texto */
+        opacity: 0; /* Começa oculto para animação de entrada */
+        transition: opacity 1s ease-in-out; /* Transição de opacidade */
       }
 
-      .fade-in {
-        animation: fadeIn 2s ease-in forwards;
+      .screen.active {
+        opacity: 1; /* Torna visível a tela ativa */
       }
 
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          filter: grayscale(1);
-        }
-        to {
-          opacity: 1;
-          filter: grayscale(0);
-        }
-      }
-
-      .typewriter {
-        overflow: hidden;
-        border-right: 0.15em solid #d4af7f;
-        white-space: nowrap;
-        animation:
-          typing 3s steps(40, end),
-          blink 0.75s step-end infinite;
+      /* Animação para elementos de texto e imagem ao aparecer na tela */
+      .screen.active h1,
+      .screen.active h2,
+      .screen.active p,
+      .screen.active img,
+      .screen.active iframe,
+      .screen.active .heart,
+      .screen.active .carousel-container {
+        animation: slideUp 1s ease-out forwards;
       }
 
       @keyframes slideUp {
@@ -77,10 +72,18 @@
         }
       }
 
-      .slide-up {
-        animation: slideUp 1s ease-out forwards;
+      /* Efeito de máquina de escrever específico para elementos com a classe .typewriter-text */
+      .typewriter-text {
+        overflow: hidden;
+        border-right: 0.15em solid #d4af7f;
+        white-space: nowrap;
+        width: 0; /* Começa com largura zero */
+        animation: none; /* Animação será controlada via JS */
+        max-width: 90%; /* Para que o texto não exceda a largura da tela */
+        margin: 0 auto; /* Centraliza o parágrafo */
       }
 
+      /* Animações específicas para o efeito de máquina de escrever */
       @keyframes typing {
         from {
           width: 0;
@@ -131,9 +134,19 @@
         width: 100%;
         height: 100%;
         background: rgba(0, 0, 0, 0.7);
-        display: none;
+        display: flex; /* Começa como flex para transição */
         justify-content: center;
         align-items: center;
+        opacity: 0; /* Começa invisível */
+        visibility: hidden; /* Esconde do fluxo do documento */
+        transition:
+          opacity 0.3s ease-in-out,
+          visibility 0.3s ease-in-out;
+      }
+
+      .popup.show {
+        opacity: 1;
+        visibility: visible;
       }
 
       .popup-content {
@@ -144,6 +157,12 @@
         text-align: center;
         max-width: 400px;
         width: 90%;
+        transform: translateY(20px); /* Para animação de entrada */
+        transition: transform 0.3s ease-in-out;
+      }
+
+      .popup.show .popup-content {
+        transform: translateY(0);
       }
 
       .popup button {
@@ -154,6 +173,7 @@
         font-size: 1rem;
         cursor: pointer;
         border-radius: 5px;
+        margin-top: 1rem;
       }
 
       .popup button:hover {
@@ -162,15 +182,78 @@
 
       /* Estilos da tela que fica oculta até o dia 22 de maio */
       .hidden-until-may {
-        display: none;
+        display: none; /* Mantemos o display none para ocultar completamente */
+      }
+
+      /* --- Estilos do Carrossel de Fotos --- */
+      .carousel-container {
+        position: relative;
+        width: 90%; /* Largura do contêiner do carrossel */
+        max-width: 500px; /* Largura máxima para desktop */
+        height: 350px; /* Altura fixa do carrossel */
+        overflow: hidden;
+        border-radius: 10px;
+        margin-top: 20px;
+        box-shadow: 0 0 15px rgba(212, 175, 127, 0.5); /* Sombra dourada */
+      }
+
+      .carousel-track {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+        height: 100%;
+      }
+
+      .carousel-slide {
+        min-width: 100%; /* Cada slide ocupa a largura total do contêiner */
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .carousel-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Cobre o slide sem distorcer, cortando se necessário */
+        border-radius: 10px;
+      }
+
+      .carousel-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.5);
+        color: #d4af7f;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        font-size: 1.5rem;
+        z-index: 10;
+        border-radius: 50%; /* Botões redondos */
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.3s ease;
+      }
+
+      .carousel-button:hover {
+        background: rgba(0, 0, 0, 0.8);
+      }
+
+      .carousel-button.prev {
+        left: 10px;
+      }
+
+      .carousel-button.next {
+        right: 10px;
       }
     </style>
   </head>
   <body>
-    <!-- Substitua o conteúdo anterior do .container por este -->
     <div class="container" id="slider">
-      <!-- Tela 1 -->
-      <section class="screen fade-in">
+      <section class="screen">
         <h2 class="date">VOCÊ É INCRÍVEL</h2>
         <img
           src="img/images.png"
@@ -185,19 +268,17 @@
         <h1>Você é o melhor presente.</h1>
       </section>
 
-      <!-- Tela 2 -->
       <section class="screen">
         <h2 class="date">EU E ANNY TE AMAMOS</h2>
         <h2>Toque aqui</h2>
         <div class="heart" style="margin-top: 1rem" id="heart">❤️</div>
       </section>
 
-      <!-- Tela 3 -->
       <section class="screen">
         <h2 class="date">UMA MULHER ESPETACULAR</h2>
         <iframe
           style="border-radius: 12px"
-          src="https://open.spotify.com/embed/track/2TE9rkhJYDctxgzak0AnSb?utm_source=generator&theme=0"
+          src="https://open.spotify.com/embed/track/2S5kF9f02aD2K1Sg0q8cKj?utm_source=generator"
           width="100%"
           height="152"
           frameborder="0"
@@ -211,20 +292,52 @@
         <div class="heart">💛</div>
       </section>
 
-      <!-- Tela 4 -->
+      <section class="screen">
+        <h2 class="date">NOSSOS MOMENTOS</h2>
+        <div class="carousel-container">
+          <div class="carousel-track" id="carouselTrack">
+            <div class="carousel-slide">
+              <img src="img/foto1.jpg" alt="Nosso Momento 1" />
+            </div>
+            <div class="carousel-slide">
+              <img src="img/foto2.jpg" alt="Nosso Momento 2" />
+            </div>
+            <div class="carousel-slide">
+              <img
+                src="img/foto3.jpg"
+                alt="Nosso Momento 3"
+                width="200"
+                height="200"
+              />
+            </div>
+          </div>
+          <button class="carousel-button prev" id="carouselPrev">
+            &#10094;
+          </button>
+          <button class="carousel-button next" id="carouselNext">
+            &#10095;
+          </button>
+        </div>
+      </section>
+
       <section class="screen">
         <h2 class="date">EU TE AMO XU</h2>
         <h1 id="countdown">Faltam X dias...</h1>
-        <p class="typewriter">
-          Você é inérivel, somos incríveis juntos. Eu te amo.
+        <p
+          class="typewriter-text"
+          data-text="Você é incrível, somos incríveis juntos. Eu te amo."
+        >
+          Você é incrível, somos incríveis juntos. Eu te amo.
         </p>
       </section>
 
-      <!-- Tela 5 (Oculta até o dia 22 de maio) -->
       <section class="screen hidden-until-may" id="finalScreen">
         <h2 class="date">SEU GRANDE DIA</h2>
         <h2>Final</h2>
-        <p>
+        <p
+          class="typewriter-text"
+          data-text="Hoje é um dia muito especial, o seu grande dia! O ano em que você completa 25 anos, e o ano em que celebramos mais uma conquista da nossa jornada juntos. Tenho tanto orgulho da mulher que você se tornou, da mãe maravilhosa que está se tornando para a Anny, e da companheira incrível que é para mim. Sou imensamente grato por cada momento que compartilhamos e por tudo o que conquistamos até aqui. Ter você ao meu lado é a maior sorte que eu poderia pedir. Você é forte, cheia de amor e tem um coração imenso, capaz de transformar o mundo ao seu redor. Estamos trilhando o caminho dos nossos sonhos, e o que vivemos até agora é apenas o começo. Que este dia seja repleto de amor, alegria e muita felicidade, porque você merece tudo isso e muito mais. Saiba que estarei sempre aqui, ao seu lado, para apoiar cada passo seu. Vamos celebrar hoje e todos os momentos incríveis que ainda nos aguardam. Feliz aniversário, meu amor! ❤️"
+        >
           Hoje é um dia muito especial, o seu grande dia! O ano em que você
           completa 25 anos, e o ano em que celebramos mais uma conquista da
           nossa jornada juntos. Tenho tanto orgulho da mulher que você se
@@ -243,7 +356,6 @@
       </section>
     </div>
 
-    <!-- Popup -->
     <div class="popup" id="popup">
       <div class="popup-content">
         <h2>Mensagem Especial</h2>
@@ -255,48 +367,209 @@
     </div>
 
     <script>
-      let slider = document.getElementById("slider");
-      let startX = 0;
+      const slider = document.getElementById("slider");
+      const screens = document.querySelectorAll(".screen");
       let currentIndex = 0;
+      let isTransitioning = false; // Flag para evitar múltiplas transições
 
-      // Função para abrir o popup
-      document.getElementById("heart").addEventListener("click", function () {
-        document.getElementById("popup").style.display = "flex";
+      // Referências para o carrossel de fotos
+      const carouselTrack = document.getElementById("carouselTrack");
+      const carouselSlides = document.querySelectorAll(".carousel-slide");
+      const carouselPrevBtn = document.getElementById("carouselPrev");
+      const carouselNextBtn = document.getElementById("carouselNext");
+      let currentSlideIndex = 0; // Índice da foto atual no carrossel
+
+      // Função para exibir uma tela específica
+      function showScreen(index) {
+        if (isTransitioning) return; // Se já estiver em transição, não faz nada
+
+        isTransitioning = true;
+        slider.style.transform = `translateX(-${index * 100}vw)`;
+
+        // Remove a classe 'active' de todas as telas
+        screens.forEach((screen) => screen.classList.remove("active"));
+
+        // Adiciona a classe 'active' à tela atual após a transição de slide
+        setTimeout(() => {
+          screens[index].classList.add("active");
+          typewriterEffect(screens[index]); // Inicia o efeito de máquina de escrever na tela ativa
+          isTransitioning = false;
+
+          // Se a tela ativa for a do carrossel, reseta para a primeira foto
+          if (screens[index].querySelector(".carousel-container")) {
+            currentSlideIndex = 0;
+            updateCarouselSlide();
+          }
+        }, 800); // Tempo igual à transição do slider (0.8s)
+      }
+
+      // Função para o efeito de máquina de escrever
+      function typewriterEffect(screen) {
+        const typewriterElements = screen.querySelectorAll(".typewriter-text");
+        typewriterElements.forEach((element) => {
+          const text = element.dataset.text; // Pega o texto do atributo data-text
+          element.textContent = ""; // Limpa o conteúdo atual
+          element.style.width = "0"; // Reseta a largura para a animação
+          element.style.borderRight = "0.15em solid #d4af7f"; // Garante o cursor
+
+          // Remove animações CSS existentes antes de adicionar as novas
+          element.style.animation = "none";
+          element.offsetHeight; // Força o reflow para reiniciar a animação
+
+          // Ajusta a duração da animação de digitação com base no comprimento do texto
+          const typingDuration = text.length * 0.05; // 0.05 segundos por caractere
+          element.style.animation = `typing ${typingDuration}s steps(${text.length}, end) forwards, blink 0.75s step-end infinite`;
+
+          // Define o texto completo após a animação para garantir que ele apareça corretamente
+          setTimeout(() => {
+            element.textContent = text;
+          }, typingDuration * 1000); // Converte para milissegundos
+        });
+      }
+
+      // Funções de navegação do carrossel
+      function updateCarouselSlide() {
+        const slideWidth = carouselSlides[0].clientWidth;
+        carouselTrack.style.transform = `translateX(-${currentSlideIndex * slideWidth}px)`;
+      }
+
+      carouselPrevBtn.addEventListener("click", () => {
+        if (currentSlideIndex > 0) {
+          currentSlideIndex--;
+          updateCarouselSlide();
+        } else {
+          // Volta para a última foto se estiver na primeira
+          currentSlideIndex = carouselSlides.length - 1;
+          updateCarouselSlide();
+        }
       });
 
-      // Função para fechar o popup
-      document
-        .getElementById("closePopup")
-        .addEventListener("click", function () {
-          document.getElementById("popup").style.display = "none";
-        });
+      carouselNextBtn.addEventListener("click", () => {
+        if (currentSlideIndex < carouselSlides.length - 1) {
+          currentSlideIndex++;
+          updateCarouselSlide();
+        } else {
+          // Volta para a primeira foto se estiver na última
+          currentSlideIndex = 0;
+          updateCarouselSlide();
+        }
+      });
 
-      document.addEventListener("touchstart", (e) => {
+      // Funções de navegação do slideshow principal
+      function nextScreen() {
+        if (currentIndex < screens.length - 1) {
+          currentIndex++;
+          showScreen(currentIndex);
+        }
+      }
+
+      function prevScreen() {
+        if (currentIndex > 0) {
+          currentIndex--;
+          showScreen(currentIndex);
+        }
+      }
+
+      // Navegação por toque (swipe)
+      let startX = 0;
+      slider.addEventListener("touchstart", (e) => {
         startX = e.touches[0].clientX;
       });
 
-      document.addEventListener("touchend", (e) => {
+      slider.addEventListener("touchend", (e) => {
         let endX = e.changedTouches[0].clientX;
         let diff = startX - endX;
-        if (diff > 50 && currentIndex < 4) currentIndex++;
-        else if (diff < -50 && currentIndex > 0) currentIndex--;
-        slider.style.transform = `translateX(-${currentIndex * 100}vw)`;
+        if (diff > 50) {
+          // Swipe para a esquerda
+          nextScreen();
+        } else if (diff < -50) {
+          // Swipe para a direita
+          prevScreen();
+        }
+      });
+
+      // Navegação por mouse (arrastar)
+      let isDragging = false;
+      let dragStartX = 0;
+
+      slider.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        dragStartX = e.clientX;
+        slider.style.cursor = "grabbing";
+      });
+
+      slider.addEventListener("mouseup", () => {
+        isDragging = false;
+        slider.style.cursor = "grab";
+      });
+
+      slider.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+        e.preventDefault(); // Evita a seleção de texto ao arrastar
+        let dragCurrentX = e.clientX;
+        let dragDiff = dragStartX - dragCurrentX;
+
+        // Se o arrasto for significativo, dispara a navegação
+        if (Math.abs(dragDiff) > 50 && !isTransitioning) {
+          if (dragDiff > 0) {
+            nextScreen();
+          } else {
+            prevScreen();
+          }
+          isDragging = false; // Reseta o arrasto após a transição
+        }
+      });
+
+      // Lógica do Popup
+      const heartButton = document.getElementById("heart");
+      const popup = document.getElementById("popup");
+      const closePopupButton = document.getElementById("closePopup");
+
+      heartButton.addEventListener("click", () => {
+        popup.classList.add("show");
+      });
+
+      closePopupButton.addEventListener("click", () => {
+        popup.classList.remove("show");
+      });
+
+      // Fechar popup clicando fora
+      popup.addEventListener("click", (e) => {
+        if (e.target === popup) {
+          popup.classList.remove("show");
+        }
       });
 
       // Lógica para verificar a data e exibir a tela do dia 22 de maio
       const finalScreen = document.getElementById("finalScreen");
       const countdownElement = document.getElementById("countdown");
 
+      // Define a data alvo para 22 de maio do ano atual
       const today = new Date();
       const may22 = new Date(today.getFullYear(), 4, 22); // Maio é o mês 4 (indexado de 0)
 
-      if (today >= may22) {
+      // Se a data alvo já passou no ano atual, ajusta para o próximo ano
+      if (
+        today.getMonth() > may22.getMonth() ||
+        (today.getMonth() === may22.getMonth() &&
+          today.getDate() > may22.getDate())
+      ) {
+        may22.setFullYear(today.getFullYear() + 1);
+      }
+
+      if (
+        today.getDate() === may22.getDate() &&
+        today.getMonth() === may22.getMonth()
+      ) {
         finalScreen.classList.remove("hidden-until-may"); // Libera a tela
         countdownElement.innerHTML = "🎉 Hoje é o grande dia! 🎉";
       } else {
         const daysLeft = Math.ceil((may22 - today) / (1000 * 3600 * 24));
         countdownElement.innerHTML = `⏳ Faltam ${daysLeft} dias para o seu presente...`;
       }
+
+      // Inicializa a primeira tela como ativa
+      showScreen(currentIndex);
     </script>
   </body>
 </html>

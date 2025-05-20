@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Primeiro presentinho</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body,
+      html {
+        height: 100%;
+        font-family: "Playfair Display", serif;
+        background: #000;
+        color: #d4af7f;
+        overflow: hidden;
+      }
+
+      .container {
+        display: flex;
+        width: 500vw; /* 5 telas lado a lado */
+        height: 100vh;
+        transition: transform 0.5s ease-in-out;
+      }
+
+      .screen {
+        width: 100vw;
+        height: 100vh;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        position: relative;
+      }
+
+      .fade-in {
+        animation: fadeIn 2s ease-in forwards;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          filter: grayscale(1);
+        }
+        to {
+          opacity: 1;
+          filter: grayscale(0);
+        }
+      }
+
+      .typewriter {
+        overflow: hidden;
+        border-right: 0.15em solid #d4af7f;
+        white-space: nowrap;
+        animation:
+          typing 3s steps(40, end),
+          blink 0.75s step-end infinite;
+      }
+
+      @keyframes slideUp {
+        from {
+          transform: translateY(30px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .slide-up {
+        animation: slideUp 1s ease-out forwards;
+      }
+
+      @keyframes typing {
+        from {
+          width: 0;
+        }
+        to {
+          width: 100%;
+        }
+      }
+
+      @keyframes blink {
+        from,
+        to {
+          border-color: transparent;
+        }
+        50% {
+          border-color: #d4af7f;
+        }
+      }
+
+      .heart {
+        font-size: 2rem;
+        color: #d4af7f;
+        animation: beat 1s infinite;
+        cursor: pointer;
+      }
+
+      @keyframes beat {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.3);
+        }
+      }
+
+      .date {
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      /* Estilos do popup */
+      .popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: none;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .popup-content {
+        background: #fff;
+        color: #000;
+        padding: 2rem;
+        border-radius: 10px;
+        text-align: center;
+        max-width: 400px;
+        width: 90%;
+      }
+
+      .popup button {
+        background: #d4af7f;
+        border: none;
+        color: #fff;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+
+      .popup button:hover {
+        background: #b98a53;
+      }
+
+      /* Estilos da tela que fica oculta até o dia 22 de maio */
+      .hidden-until-may {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Substitua o conteúdo anterior do .container por este -->
+    <div class="container" id="slider">
+      <!-- Tela 1 -->
+      <section class="screen fade-in">
+        <h2 class="date">VOCÊ É INCRÍVEL</h2>
+        <img
+          src="img/images.png"
+          alt="Foto"
+          style="
+            border-radius: 10px;
+            margin-bottom: 20px;
+            width: 253px;
+            height: 199px;
+          "
+        />
+        <h1>Você é o melhor presente.</h1>
+      </section>
+
+      <!-- Tela 2 -->
+      <section class="screen">
+        <h2 class="date">EU E ANNY TE AMAMOS</h2>
+        <h2>Toque aqui</h2>
+        <div class="heart" style="margin-top: 1rem" id="heart">❤️</div>
+      </section>
+
+      <!-- Tela 3 -->
+      <section class="screen">
+        <h2 class="date">UMA MULHER ESPETACULAR</h2>
+        <iframe
+          style="border-radius: 12px"
+          src="https://open.spotify.com/embed/track/2TE9rkhJYDctxgzak0AnSb?utm_source=generator&theme=0"
+          width="100%"
+          height="152"
+          frameborder="0"
+          allowfullscreen=""
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy"
+        ></iframe>
+        <h2 style="margin-top: 1rem">
+          Chama no jorge e mateus <em>hahaha</em>
+        </h2>
+        <div class="heart">💛</div>
+      </section>
+
+      <!-- Tela 4 -->
+      <section class="screen">
+        <h2 class="date">EU TE AMO XU</h2>
+        <h1 id="countdown">Faltam X dias...</h1>
+        <p class="typewriter">
+          Você é inérivel, somos incríveis juntos. Eu te amo.
+        </p>
+      </section>
+
+      <!-- Tela 5 (Oculta até o dia 22 de maio) -->
+      <section class="screen hidden-until-may" id="finalScreen">
+        <h2 class="date">SEU GRANDE DIA</h2>
+        <h2>Final</h2>
+        <p>
+          Hoje é um dia muito especial, o seu grande dia! O ano em que você
+          completa 25 anos, e o ano em que celebramos mais uma conquista da
+          nossa jornada juntos. Tenho tanto orgulho da mulher que você se
+          tornou, da mãe maravilhosa que está se tornando para a Anny, e da
+          companheira incrível que é para mim. Sou imensamente grato por cada
+          momento que compartilhamos e por tudo o que conquistamos até aqui. Ter
+          você ao meu lado é a maior sorte que eu poderia pedir. Você é forte,
+          cheia de amor e tem um coração imenso, capaz de transformar o mundo ao
+          seu redor. Estamos trilhando o caminho dos nossos sonhos, e o que
+          vivemos até agora é apenas o começo. Que este dia seja repleto de
+          amor, alegria e muita felicidade, porque você merece tudo isso e muito
+          mais. Saiba que estarei sempre aqui, ao seu lado, para apoiar cada
+          passo seu. Vamos celebrar hoje e todos os momentos incríveis que ainda
+          nos aguardam. Feliz aniversário, meu amor! ❤️
+        </p>
+      </section>
+    </div>
+
+    <!-- Popup -->
+    <div class="popup" id="popup">
+      <div class="popup-content">
+        <h2>Mensagem Especial</h2>
+        <p>
+          Você é muito especial para mim! Estou feliz por estarmos juntos. ❤️
+        </p>
+        <button id="closePopup">Fechar</button>
+      </div>
+    </div>
+
+    <script>
+      let slider = document.getElementById("slider");
+      let startX = 0;
+      let currentIndex = 0;
+
+      // Função para abrir o popup
+      document.getElementById("heart").addEventListener("click", function () {
+        document.getElementById("popup").style.display = "flex";
+      });
+
+      // Função para fechar o popup
+      document
+        .getElementById("closePopup")
+        .addEventListener("click", function () {
+          document.getElementById("popup").style.display = "none";
+        });
+
+      document.addEventListener("touchstart", (e) => {
+        startX = e.touches[0].clientX;
+      });
+
+      document.addEventListener("touchend", (e) => {
+        let endX = e.changedTouches[0].clientX;
+        let diff = startX - endX;
+        if (diff > 50 && currentIndex < 4) currentIndex++;
+        else if (diff < -50 && currentIndex > 0) currentIndex--;
+        slider.style.transform = `translateX(-${currentIndex * 100}vw)`;
+      });
+
+      // Lógica para verificar a data e exibir a tela do dia 22 de maio
+
+      const finalScreen = document.getElementById("finalScreen");
+      const countdownElement = document.getElementById("countdown");
+
+      const today = new Date();
+      const may22 = new Date(today.getFullYear(), 4, 22); // Maio é o mês 4 (indexado de 0)
+
+      if (today >= may22) {
+        finalScreen.classList.remove("hidden-until-may"); // Libera a tela
+        countdownElement.innerHTML = "🎉 Hoje é o grande dia! 🎉";
+      } else {
+        const daysLeft = Math.ceil((may22 - today) / (1000 * 3600 * 24));
+        countdownElement.innerHTML = `⏳ Faltam ${daysLeft} dias para o seu presente...`;
+      }
+    </script>
+  </body>
+</html>
