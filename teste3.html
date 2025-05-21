@@ -25,8 +25,8 @@
 
       .container {
         display: flex;
-        /* Agora temos 7 telas (inicial, popup, spotify, carrossel, countdown, seu grande dia, texto final) */
-        width: 700vw; /* Ajustado para 7 telas */
+        /* Agora temos 6 telas (inicial, popup, spotify, carrossel, countdown, final) */
+        width: 600vw;
         height: 100vh;
         transition: transform 0.8s ease-in-out; /* Transição mais suave */
       }
@@ -72,23 +72,35 @@
         }
       }
 
-      /* Estilo para o texto longo na nova tela final */
-      .long-text {
-        white-space: pre-wrap; /* Mantém quebras de linha e espaços */
-        text-align: justify; /* Ajusta o alinhamento para o texto longo em telas grandes */
-        max-width: 800px; /* Largura máxima para o texto */
-        margin: 0 auto;
-        font-size: 1.2rem; /* Aumenta um pouco a fonte para leitura */
-        line-height: 1.6; /* Espaçamento entre linhas */
-        padding: 1rem; /* Padding em todos os lados */
-        overflow-y: auto; /* Adiciona scroll se o texto for muito longo */
-        height: calc(
-          100vh - 100px
-        ); /* Ajusta a altura para caber na tela com scroll */
-        word-wrap: break-word; /* Garante que palavras muito longas quebrem */
-        -webkit-hyphens: auto; /* Hifenização para navegadores WebKit */
-        -ms-hyphens: auto; /* Hifenização para Internet Explorer */
-        hyphens: auto; /* Hifenização para outros navegadores */
+      /* Efeito de máquina de escrever específico para elementos com a classe .typewriter-text */
+      .typewriter-text {
+        overflow: hidden;
+        border-right: 0.15em solid #d4af7f;
+        white-space: nowrap;
+        width: 0; /* Começa com largura zero */
+        animation: none; /* Animação será controlada via JS */
+        max-width: 90%; /* Para que o texto não exceda a largura da tela */
+        margin: 0 auto; /* Centraliza o parágrafo */
+      }
+
+      /* Animações específicas para o efeito de máquina de escrever */
+      @keyframes typing {
+        from {
+          width: 0;
+        }
+        to {
+          width: 100%;
+        }
+      }
+
+      @keyframes blink {
+        from,
+        to {
+          border-color: transparent;
+        }
+        50% {
+          border-color: #d4af7f;
+        }
       }
 
       .heart {
@@ -237,20 +249,6 @@
       .carousel-button.next {
         right: 10px;
       }
-
-      /* Media query para telas menores (celulares) */
-      @media (max-width: 768px) {
-        .long-text {
-          font-size: 1rem; /* Reduz a fonte para caber melhor em telas pequenas */
-          padding: 0.8rem; /* Ajustei o padding para um valor intermediário */
-          text-align: left; /* MUITO IMPORTANTE: Mudar para 'left' para leitura de "livro" em telas estreitas */
-        }
-
-        /* Ajuste para o padding das telas em geral no celular */
-        .screen {
-          padding: 1rem; /* Reduz o padding geral das telas no celular */
-        }
-      }
     </style>
   </head>
   <body>
@@ -313,56 +311,45 @@
               />
             </div>
           </div>
-          <button class="carousel-button prev" id="carouselPrev">❮</button>
-          <button class="carousel-button next" id="carouselNext">❯</button>
+          <button class="carousel-button prev" id="carouselPrev">
+            &#10094;
+          </button>
+          <button class="carousel-button next" id="carouselNext">
+            &#10095;
+          </button>
         </div>
       </section>
 
       <section class="screen">
         <h2 class="date">EU TE AMO XU</h2>
         <h1 id="countdown">Faltam X dias...</h1>
-        <p>Você é incrível, somos incríveis juntos. Eu te amo.</p>
-      </section>
-
-      <section class="screen hidden-until-may" id="yourBigDayScreen">
-        <h2 class="date">SEU GRANDE DIA!</h2>
-        <h1>Seu presente está aqui!</h1>
-        <p>
-          Arraste a tela para o lado para ler sua mensagem especial e o
-          presente(SEU PRESENTE SOU EU). ➡️
+        <p
+          class="typewriter-text"
+          data-text="Você é incrível, somos incríveis juntos. Eu te amo."
+        >
+          Você é incrível, somos incríveis juntos. Eu te amo.
         </p>
       </section>
 
-      <section class="screen" id="finalTextScreen">
-        <h2 class="date">CARTA ABERTA</h2>
-        <p class="long-text">
-          E aí, meu bem! Mais um ano... você está ficando velha, completando 25
-          anos de idade, e daqui a 5 anos já vai ser o trintão, kkkkkk. Logo,
-          logo seremos nós dois, velhos, e a Anny chegando na nossa idade. Se
-          pararmos para pensar, eu e você já passamos por várias situações ao
-          qual, neste texto, não serão faladas. Mas saiba que valeu a pena
-          esperar e esperar, até que nós dois nos resolvemos. E cá estamos nós,
-          juntos, realizando a maior loucura e concretizando um sonho meu que
-          virou nosso. Tenho orgulho da mulher que se tornou e está se tornando
-          para mim e para a Anny. Saiba que a nossa maior missão, hoje, é educar
-          a Anny neste mundo ruim que estamos vivendo, para que ela cresça
-          sabendo o que é certo e errado. Você passou pelo pior momento da minha
-          vida, que foi a perda do meu pai. Você estava ali do meu lado, do seu
-          jeitinho. E sei que se você pegar para conversar sobre o assunto, vai
-          chorar, porque eu sei que você também sentiu a perda do 'gordinho'.
-          Hoje, tento e me esforço para ser forte por vocês, por ele e pela
-          minha mãe. Te conheci por acaso, naquela época, e foi o acaso mais
-          certo que teve para mim. Tenho uma mulher incrível, sensacional,
-          esforçada e determinada. Logo, logo estaremos no mesmo lugar e
-          convivendo todos os dias, se Deus quiser. Não vou dizer que tudo vai
-          ser perfeito, pois temos jeitos diferentes de fazer as coisas, mas
-          vamos nos esforçar para compreender um ao outro e ter uma união de
-          família. De fato, você tem uma família. Espero que eu consiga suprir
-          seus vazios e suas necessidades, e estar do seu lado no pior e no
-          melhor momento. E uma última coisa: quando o nosso sonho estiver 100%,
-          vamos ter uma mudança em nossas vidas. No dia, você saberá. Saiba que
-          eu te amo e conte comigo sempre.
-        </p>
+      <section class="screen hidden-until-may" id="finalScreen">
+        <h2 class="date">SEU GRANDE DIA</h2>
+        <h2>Final</h2>
+        <p
+          class="typewriter-text"
+          data-text="E aí, meu bem! Mais um ano... você está ficando velha, completando 25 anos de idade, e daqui a 5 anos já vai ser o trintão, kkkkkk. Logo, logo seremos nós dois, velhos, e a Anny chegando na nossa idade.
+
+Se pararmos para pensar, eu e você já passamos por várias situações ao qual, neste texto, não serão faladas. Mas saiba que valeu a pena esperar e esperar, até que nós dois nos resolvemos. E cá estamos nós, juntos, realizando a maior loucura e concretizando um sonho meu que virou nosso.
+
+Tenho orgulho da mulher que se tornou e está se tornando para mim e para a Anny. Saiba que a nossa maior missão, hoje, é educar a Anny neste mundo ruim que estamos vivendo, para que ela cresça sabendo o que é certo e errado.
+
+Você passou pelo pior momento da minha vida, que foi a perda do meu pai. Você estava ali do meu lado, do seu jeitinho. E sei que se você pegar para conversar sobre o assunto, vai chorar, porque eu sei que você também sentiu a perda do 'gordinho'. Hoje, tento e me esforço para ser forte por vocês, por ele e pela minha mãe.
+
+Te conheci por acaso, naquela época, e foi o acaso mais certo que teve para mim. Tenho uma mulher incrível, sensacional, esforçada e determinada.
+
+Logo, logo estaremos no mesmo lugar e convivendo todos os dias, se Deus quiser. Não vou dizer que tudo vai ser perfeito, pois temos jeitos diferentes de fazer as coisas, mas vamos nos esforçar para compreender um ao outro e ter uma união de família. De fato, você tem uma família. Espero que eu consiga suprir seus vazios e suas necessidades, e estar do seu lado no pior e no melhor momento.
+
+E uma última coisa: quando o nosso sonho estiver 100%, vamos ter uma mudança em nossas vidas. No dia, você saberá. Saiba que eu te amo e conte comigo sempre."
+        ></p>
       </section>
     </div>
     <div class="popup" id="popup">
@@ -378,7 +365,7 @@
     <script>
       const slider = document.getElementById("slider");
       const screens = document.querySelectorAll(".screen");
-      let currentIndex = 0; // SEMPRE COMEÇA NA PRIMEIRA TELA PADRÃO
+      let currentIndex = 0;
       let isTransitioning = false; // Flag para evitar múltiplas transições
 
       // Referências para o carrossel de fotos
@@ -401,6 +388,7 @@
         // Adiciona a classe 'active' à tela atual após a transição de slide
         setTimeout(() => {
           screens[index].classList.add("active");
+          typewriterEffect(screens[index]); // Inicia o efeito de máquina de escrever na tela ativa
           isTransitioning = false;
 
           // Se a tela ativa for a do carrossel, reseta para a primeira foto
@@ -408,15 +396,37 @@
             currentSlideIndex = 0;
             updateCarouselSlide();
           }
-        }, 800);
+        }, 800); // Tempo igual à transição do slider (0.8s)
+      }
+
+      // Função para o efeito de máquina de escrever
+      function typewriterEffect(screen) {
+        const typewriterElements = screen.querySelectorAll(".typewriter-text");
+        typewriterElements.forEach((element) => {
+          const text = element.dataset.text; // Pega o texto do atributo data-text
+          element.textContent = ""; // Limpa o conteúdo atual
+          element.style.width = "0"; // Reseta a largura para a animação
+          element.style.borderRight = "0.15em solid #d4af7f"; // Garante o cursor
+
+          // Remove animações CSS existentes antes de adicionar as novas
+          element.style.animation = "none";
+          element.offsetHeight; // Força o reflow para reiniciar a animação
+
+          // Ajusta a duração da animação de digitação com base no comprimento do texto
+          const typingDuration = text.length * 0.05; // 0.05 segundos por caractere
+          element.style.animation = `typing ${typingDuration}s steps(${text.length}, end) forwards, blink 0.75s step-end infinite`;
+
+          // Define o texto completo após a animação para garantir que ele apareça corretamente
+          setTimeout(() => {
+            element.textContent = text;
+          }, typingDuration * 1000); // Converte para milissegundos
+        });
       }
 
       // Funções de navegação do carrossel
       function updateCarouselSlide() {
         const slideWidth = carouselSlides[0].clientWidth;
-        carouselTrack.style.transform = `translateX(-${
-          currentSlideIndex * slideWidth
-        }px)`;
+        carouselTrack.style.transform = `translateX(-${currentSlideIndex * slideWidth}px)`;
       }
 
       carouselPrevBtn.addEventListener("click", () => {
@@ -443,20 +453,6 @@
 
       // Funções de navegação do slideshow principal
       function nextScreen() {
-        // Encontra o índice da tela "Seu Grande Dia"
-        const yourBigDayScreenIndex = Array.from(screens).findIndex(
-          (screen) => screen.id === "yourBigDayScreen"
-        );
-
-        // Se a próxima tela for a "Seu Grande Dia" e ela estiver oculta, não avança
-        if (
-          currentIndex + 1 === yourBigDayScreenIndex &&
-          screens[yourBigDayScreenIndex].classList.contains("hidden-until-may")
-        ) {
-          // Não faz nada, a tela está oculta
-          return;
-        }
-
         if (currentIndex < screens.length - 1) {
           currentIndex++;
           showScreen(currentIndex);
@@ -541,13 +537,12 @@
       });
 
       // Lógica para verificar a data e exibir a tela do dia 22 de maio
-      const yourBigDayScreen = document.getElementById("yourBigDayScreen");
+      const finalScreen = document.getElementById("finalScreen");
       const countdownElement = document.getElementById("countdown");
 
       // Define a data alvo para 22 de maio do ano atual
       const today = new Date();
-      // IMPORTANTE: Mantenho 21 de maio para o teste. Se quiser que o presente seja no dia 22, mude para: new Date(today.getFullYear(), 4, 22);
-      const may22 = new Date(today.getFullYear(), 4, 22); // Maio é o mês 4 (indexado de 0 a 11)
+      const may22 = new Date(today.getFullYear(), 4, 21); // Maio é o mês 4 (indexado de 0)
 
       // Se a data alvo já passou no ano atual, ajusta para o próximo ano
       if (
@@ -558,19 +553,18 @@
         may22.setFullYear(today.getFullYear() + 1);
       }
 
-      // Verifica se é a data do presente
       if (
         today.getDate() === may22.getDate() &&
         today.getMonth() === may22.getMonth()
       ) {
-        yourBigDayScreen.classList.remove("hidden-until-may"); // Libera a tela "Seu Grande Dia"
+        finalScreen.classList.remove("hidden-until-may"); // Libera a tela
         countdownElement.innerHTML = "🎉 Hoje é o grande dia! 🎉";
       } else {
         const daysLeft = Math.ceil((may22 - today) / (1000 * 3600 * 24));
         countdownElement.innerHTML = `⏳ Faltam ${daysLeft} dias para o seu presente...`;
       }
 
-      // Inicializa SEMPRE na primeira tela (currentIndex = 0 por padrão)
+      // Inicializa a primeira tela como ativa
       showScreen(currentIndex);
     </script>
   </body>
